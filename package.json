@@ -1,0 +1,43 @@
+{
+  "name": "kltk-observable",
+  "version": "0.0.1",
+  "description": "a simple observable data & react hooks",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kltk/observable"
+  },
+  "keywords": [
+    "observable",
+    "immutable",
+    "data",
+    "react",
+    "hooks"
+  ],
+  "author": "z <haig8@msn.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/lodash.get": "^4.4.6",
+    "@types/lodash.set": "^4.3.6",
+    "@types/lodash.topath": "^4.5.6",
+    "immer": "^5.1.0",
+    "lodash.get": "^4.4.2",
+    "lodash.set": "^4.3.2",
+    "lodash.topath": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.25",
+    "@types/node": "^13.1.2",
+    "@types/react": "^16.9.17",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.4"
+  },
+  "peerDependencies": {
+  }
+}
