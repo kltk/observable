@@ -43,18 +43,18 @@ describe('get', () => {
 describe('set', () => {
   test('set', () => {
     const o = new Observable({ key1: 1, key2: { subkey: 2 } });
-    o.set('key1', 0);
+    o.set(0, 'key1');
     expect(o.get('key1')).toBe(0);
-    o.set(['key2', 'subkey'], 1);
+    o.set(1, ['key2', 'subkey']);
     expect(o.get('key2.subkey')).toBe(1);
-    o.set('key3', 'value3');
+    o.set('value3', 'key3');
     expect(o.get('key3')).toBe('value3');
-    o.set('key4.subkey', 'not exist');
+    o.set('not exist', 'key4.subkey');
     expect(o.get('key4.subkey')).toBeDefined();
-    o.set('', null);
-    o.set('key5', 'value');
+    o.set(null, '');
+    o.set('value', 'key5');
     expect(o.get('key5')).toBe('value');
-    o.set('key5.subkey', 'subvalue');
+    o.set('subvalue', 'key5.subkey');
     expect(o.get('key5.subkey')).toBe('subvalue');
   });
 });
@@ -66,8 +66,8 @@ describe('subscribe', () => {
     const fn = jest.fn();
     const o = new Observable();
     o.subscribe(fn);
-    o.set([], 1);
-    o.set([], 2);
+    o.set(1, []);
+    o.set(2, []);
     delay(1e3);
     expect(fn).toBeCalledTimes(0);
     await Promise.resolve();
@@ -79,10 +79,10 @@ describe('subscribe', () => {
     test.each(table)('do not call with same value %s', async x => {
       const fn = jest.fn();
       const o = new Observable();
-      o.set([], x);
+      o.set(x, []);
       await Promise.resolve();
       o.subscribe(fn);
-      o.set([], x);
+      o.set(x, []);
       await Promise.resolve();
       expect(fn).toBeCalledTimes(0);
     });
@@ -93,7 +93,7 @@ describe('subscribe', () => {
       const fn = jest.fn();
       const o = new Observable({});
       o.subscribe(fn);
-      o.set([], x);
+      o.set(x, []);
       await Promise.resolve();
       expect(fn).toBeCalledWith(x);
     });
@@ -105,11 +105,11 @@ describe('unsubscribe', () => {
     const fn = jest.fn();
     const o = new Observable({});
     o.subscribe(fn);
-    o.set([], {});
+    o.set({}, []);
     await Promise.resolve();
     expect(fn).toBeCalledTimes(1);
     o.unsubscribe(fn);
-    o.set([], {});
+    o.set({}, []);
     await Promise.resolve();
     expect(fn).toBeCalledTimes(1);
   });

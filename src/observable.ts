@@ -71,7 +71,7 @@ class Observable<State extends {}> {
    * @param path 要设置的属性路径，用空字符串或空数组表示根路径
    * @param data 要设置的值
    */
-  set(path: Path, data: any) {
+  set(data: any, path?: Path) {
     const p = toPath(path);
     /**
      * 1. lodash.set 不支持根路径
