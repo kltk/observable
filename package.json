@@ -1,6 +1,6 @@
 {
   "name": "kltk-observable",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "a simple observable data & react hooks",
   "main": "dist/index.js",
   "scripts": {
