@@ -3,7 +3,7 @@ import get from 'lodash.get';
 import set from 'lodash.set';
 import toPath from 'lodash.topath';
 
-type Part<T> = Partial<T> | T | null;
+type Part<T> = Partial<T> | T | null | undefined;
 type Path = string | number | (string | number)[];
 
 /**

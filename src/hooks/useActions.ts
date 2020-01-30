@@ -1,7 +1,7 @@
 import React from 'react';
 import Observable from '../observable';
 import { concatPath, makeActions, mergeActions } from './utils';
-import { Path, Actions, BoundActions } from './utils';
+import { Path, Actions, BoundActions, ActionsArg } from './utils';
 
 const base = makeActions({
   get state() {
@@ -21,7 +21,7 @@ function useActions<
   ObservableState = any
 >(
   observable: Observable<ObservableState>,
-  actions: BoundActions<T, ActionState, ObservableState>,
+  actions: ActionsArg<T, ActionState, ObservableState>,
   path?: Path,
 ) {
   const [ref] = React.useState(() => mergeActions(base, actions));
@@ -32,7 +32,7 @@ function useActions<
   React.useMemo(() => {
     Object.keys(actions).forEach(name => {
       const prop = Object.getOwnPropertyDescriptor(actions, name);
-      if (typeof prop.value !== 'function') return;
+      if (typeof prop?.value !== 'function') return;
       if (ref[name].bound) return;
 
       // make dynamic function with name
@@ -46,12 +46,7 @@ function useActions<
     });
   }, [actions, ref]);
 
-  type OmitStates = Omit<typeof ref, 'observable' | 'state'>;
-  type States = {
-    observable: Observable<ObservableState>;
-    state: typeof actions.state;
-  };
-  return ref as States & OmitStates;
+  return ref as BoundActions<T, ActionState, ObservableState>;
 }
 
 export default useActions;

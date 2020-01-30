@@ -8,26 +8,32 @@ type Path<T = string | number> = T | T[];
 // type Actions = { [name in string | number | symbol]: Action };
 type Actions = { [name in string | number | symbol]: any };
 
+type ActionThis<ActionState, ObservableState> = {
+  observable: Observable<ObservableState>;
+  path: Path;
+  state: ActionState;
+  get: (path?: Path) => any;
+  set: (data: any, path?: Path) => any;
+};
+
 type BoundType<T> = T & ThisType<T>;
 
+type ActionsArg<T, ActionState = any, ObservableState = any> = T &
+  Partial<ActionThis<ActionState, ObservableState>> &
+  ThisType<T & ActionThis<ActionState, ObservableState>>;
+
 type BoundActions<T, ActionState = any, ObservableState = any> = BoundType<
-  T & {
-    observable?: Observable<ObservableState>;
-    path?: Path;
-    state?: ActionState;
-    get?: (path: Path) => any;
-    set?: (data: any, path?: Path) => any;
-  }
+  T & ActionThis<ActionState, ObservableState>
 >;
 
-function concatPath(a: Path, b: Path) {
+function concatPath(a: Path, b?: Path) {
   return [...toPath(a), ...toPath(b)];
 }
 
 function makeActions<T, ActionState = any, ObservableState = any>(
-  actions: BoundActions<T, ActionState, ObservableState>,
+  actions: ActionsArg<T, ActionState, ObservableState>,
 ) {
-  return actions;
+  return actions as BoundActions<T, ActionState, ObservableState>;
 }
 
 function mergeActions<A, B>(a: A, b: B): A & B {
@@ -36,5 +42,5 @@ function mergeActions<A, B>(a: A, b: B): A & B {
   return Object.create({}, { ...oa, ...ob });
 }
 
-export { Path, Actions, BoundActions };
+export { Path, Actions, BoundActions, ActionThis, ActionsArg };
 export { concatPath, makeActions, mergeActions };
