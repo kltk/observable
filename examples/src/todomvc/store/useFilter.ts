@@ -5,9 +5,10 @@ const actions = makeActions({
   filter(todos: Todos) {
     const { state } = this;
     return todos.filter(todo => {
-      if (state === 'All') return true;
       if (state === 'Active') return !todo.completed;
       if (state === 'Completed') return todo.completed;
+      // if (state === 'All') 
+      return true;
     });
   },
 });
