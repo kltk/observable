@@ -6,6 +6,8 @@ function create<ObservableState = any>(initial?: ObservableState) {
   const observable = new Observable(initial);
 
   return {
+    observable,
+
     useObservable<T extends Actions, ActionState = any>(
       actions: ActionsArg<T, ActionState, ObservableState>,
       path?: Path,
