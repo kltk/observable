@@ -38,7 +38,7 @@ function useActions<
       // make dynamic function with name
       const fn = {
         [name](this: any, ...rest: any[]) {
-          this.actions[name].apply(this, rest);
+          return this.actions[name].apply(this, rest);
         },
       }[name].bind(ref);
       Object.assign(fn, { bound: true });
