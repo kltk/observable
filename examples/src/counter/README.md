@@ -1,3 +1,3 @@
-```tsx
+```jsx
 <Counter />
 ```
