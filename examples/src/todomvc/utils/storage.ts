@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'todos-react-observable';
+const STORAGE_KEY = 'todos-tsx-observable';
 
 function getStorage() {
   const text = localStorage.getItem(STORAGE_KEY);
