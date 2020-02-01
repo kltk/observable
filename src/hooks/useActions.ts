@@ -25,23 +25,19 @@ function useActions<
   path?: Path,
 ) {
   const [ref] = React.useState(() => mergeActions(base, actions));
-  Object.assign(ref, { observable, path, actions });
+  Object.assign(ref, { observable, path });
 
   // todo remove useMemo?
   // todo without persistent function?
   React.useMemo(() => {
-    Object.keys(actions).forEach(name => {
-      const prop = Object.getOwnPropertyDescriptor(actions, name);
-      if (typeof prop?.value !== 'function') return;
-      if (ref[name].bound) return;
+    const mergedActions = mergeActions(base, actions);
+    Object.keys(mergedActions).forEach(name => {
+      const value = Object.getOwnPropertyDescriptor(mergedActions, name)?.value;
+      if (typeof value !== 'function') return;
+      if (ref[name]?.bound === value) return;
 
-      // make dynamic function with name
-      const fn = {
-        [name](this: any, ...rest: any[]) {
-          return this.actions[name].apply(this, rest);
-        },
-      }[name].bind(ref);
-      Object.assign(fn, { bound: true });
+      const fn = value.bind(ref);
+      Object.assign(fn, { bound: value });
       Object.assign(ref, { [name]: fn });
     });
   }, [actions, ref]);
