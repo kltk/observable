@@ -21,6 +21,9 @@
   ],
   "author": "z <haig8@msn.com>",
   "license": "MIT",
+  "files": [
+    "dist/**/*"
+  ],
   "dependencies": {
     "@types/lodash.get": "^4.4.6",
     "@types/lodash.set": "^4.3.6",
