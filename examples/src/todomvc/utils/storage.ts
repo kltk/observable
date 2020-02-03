@@ -13,4 +13,12 @@ function setStorage(json: any) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(json));
 }
 
-export { getStorage, setStorage };
+function subscribe(cb: Function) {
+  window.addEventListener('storage', e => {
+    if (e.key === STORAGE_KEY) {
+      cb(getStorage());
+    }
+  });
+}
+
+export { getStorage, setStorage, subscribe };
