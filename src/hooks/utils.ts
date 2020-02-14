@@ -1,4 +1,4 @@
-import toPath = require('lodash.topath');
+import toPath from 'lodash.topath';
 import Observable from '../observable';
 
 type Path<T = string | number> = T | T[];
